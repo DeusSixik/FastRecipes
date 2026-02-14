@@ -191,7 +191,7 @@ public class FastRecipeManager extends RecipeManager {
 
     @Override
     protected Map<ResourceLocation, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
-        if(!FastRecipes.BaseConfig.getCurrentConfig().UseAsyncRecipesLoader)
+        if(!FastRecipes.getConfig().getCurrentConfig().UseAsyncRecipesLoader)
             return super.prepare(resourceManager, profiler);
 
         final Map<ResourceLocation, JsonElement> map = new ConcurrentHashMap<>();

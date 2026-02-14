@@ -12,10 +12,10 @@ public class MinecraftServerMixin {
 
     private static boolean loaded = false;
 
-    @Inject(method = "runServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;tickServer(Ljava/util/function/BooleanSupplier;)V", shift = At.Shift.BEFORE))
+    @Inject(method = "runServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;tickServer(Ljava/util/function/BooleanSupplier;)V"))
     public void onStart(CallbackInfo ci) {
         if(!loaded) {
-            if(FastRecipes.BaseConfig.getCurrentConfig().BenchmarkMode)
+            if(FastRecipes.getConfig().getCurrentConfig().BenchmarkMode)
                 FastRecipes.test((MinecraftServer)(Object) this);
             loaded = true;
         }

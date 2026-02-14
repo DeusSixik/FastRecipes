@@ -1,6 +1,5 @@
 package dev.sixik.fastrecipes;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,18 +21,21 @@ public final class FastRecipes {
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-    public static BaseShadowConfig<FastRecipesConfig> BaseConfig;
+    private static BaseShadowConfig<FastRecipesConfig> BaseConfig;
 
     public static void init() {
 
-        Minecraft.getInstance().execute(() -> {
+    }
+
+    public static BaseShadowConfig<FastRecipesConfig> getConfig() {
+        if(BaseConfig == null) {
             BaseConfig = SCTomlConfig.Builder.builder(FastRecipesConfig.class)
                     .defaults(new FastRecipesConfig())
-                    .modId(MOD_ID)
+                    .modId(FastRecipes.MOD_ID)
                     .side(ConfigSide.COMMON)
                     .build();
-        });
-
+        }
+        return BaseConfig;
     }
 
 
