@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+#issueTrackerURL = ""
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "fastrecipes"
+version = "${version}"
+displayName = "FastRecipes"
+authors = ""
+description = '''
+
+'''
+#logoFile = ""
+
+[[dependencies.fastrecipes]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fastrecipes]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fastrecipes]]
+modId = "shadowconfig"
+mandatory = true
+versionRange = "[1.0.6,)"
+ordering = "NONE"
+side = "BOTH"
+

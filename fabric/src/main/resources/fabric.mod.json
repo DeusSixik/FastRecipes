@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "fastrecipes",
+  "version": "${version}",
+  "name": "FastRecipes",
+  "description": "",
+  "authors": [
+    ""
+  ],
+  "contact": {
+    "homepage": ""
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/fastrecipes/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.sixik.fastrecipes.fabric.FastrecipesFabric"
+    ],
+    "client": [
+      "dev.sixik.fastrecipes.fabric.client.FastrecipesFabricClient"
+    ]
+  },
+  "mixins": [
+    "fastrecipes.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "~1.20.1",
+    "shadowconfig": ">=1.0.6",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
