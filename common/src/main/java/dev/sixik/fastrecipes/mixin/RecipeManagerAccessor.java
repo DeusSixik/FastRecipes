@@ -22,13 +22,4 @@ public interface RecipeManagerAccessor {
 
     @Accessor
     Logger getLOGGER();
-
-    @Accessor
-    void setHasErrors(boolean value);
-
-    @Accessor
-    void setByName(Map<ResourceLocation, Recipe<?>> byName);
-
-    @Accessor
-    void setRecipes(Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes);
 }

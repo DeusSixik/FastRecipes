@@ -23,7 +23,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.io.Reader;
 import java.util.*;
@@ -32,12 +31,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class FastRecipeManager extends RecipeManager {
 
-    private final Map<RecipeType<?>, Map<Item, List<Recipe<?>>>> fastRecipeIndex = new IdentityHashMap<>();
+    private volatile boolean indexBuilt = false;
+    private final Object indexLock = new Object();
 
+    private final Map<RecipeType<?>, Map<Item, List<Recipe<?>>>> fastRecipeIndex = new IdentityHashMap<>();
     private final Map<RecipeType<?>, List<Recipe<?>>> fallbackRecipes = new IdentityHashMap<>();
 
     @Override
     public <C extends Container, T extends Recipe<C>> List<T> getRecipesFor(RecipeType<T> recipeType, C container, Level level) {
+
+        ensureIndexBuilt();
+
         final List<T> outList = new ArrayList<>();
 
         for (T recipe : this.byType(recipeType).values()) {
@@ -52,6 +56,9 @@ public class FastRecipeManager extends RecipeManager {
 
     @Override
     public <C extends Container, T extends Recipe<C>> Optional<Pair<ResourceLocation, T>> getRecipeFor(RecipeType<T> recipeType, C container, Level level, @Nullable ResourceLocation resourceLocation) {
+
+        ensureIndexBuilt();
+
         final Map<ResourceLocation, T> map = this.byType(recipeType);
         if (resourceLocation != null) {
             T recipe = map.get(resourceLocation);
@@ -79,6 +86,8 @@ public class FastRecipeManager extends RecipeManager {
     @Override
     public <C extends Container, T extends Recipe<C>> @NotNull Optional<T> getRecipeFor(RecipeType<T> recipeType, C container, Level level) {
         if (container.isEmpty()) return Optional.empty();
+
+        ensureIndexBuilt();
 
         final Map<Item, List<Recipe<?>>> index = fastRecipeIndex.get(recipeType);
 
@@ -122,7 +131,23 @@ public class FastRecipeManager extends RecipeManager {
         return Optional.empty();
     }
 
-    @Unique
+    /**
+     * <p> Метод ленивой инициализации с Double-Checked Locking. </p>
+     * <p> Метод нужен для того чтобы построить ветку Кэша рецептов. <br>
+     * Вызывать его в момент {@code apply} не верное решение так как в этот момент части Minecraft всё ещё
+     * загружаються и могут привести к тому что рецептов не существует ! </p>
+     */
+    public void ensureIndexBuilt() {
+        if (!indexBuilt) {
+            synchronized (indexLock) {
+                if (!indexBuilt) {
+                    rebuildIndex();
+                    indexBuilt = true;
+                }
+            }
+        }
+    }
+
     private void rebuildIndex() {
         fastRecipeIndex.clear();
         fallbackRecipes.clear();
@@ -230,6 +255,7 @@ public class FastRecipeManager extends RecipeManager {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profiler) {
         super.apply(map, resourceManager, profiler);
-        rebuildIndex();
+
+        indexBuilt = false;
     }
 }

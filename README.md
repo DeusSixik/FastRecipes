@@ -44,11 +44,11 @@ Even with few recipes, the overhead of FastSuite's multithreading makes it slowe
 
 | Test Case        | FastSuite | FastRecipes   | Vanilla   |
 |:-----------------|:----------|:--------------|:----------|
-| **Simple Item**  | 0.1027 ms | **0.0045 ms** | 0.0810 ms |
+| **Simple Item**  | 0.1027 ms | **0.0050 ms** | 0.0810 ms |
 | **Double Item**  | 0.1033 ms | **0.0038 ms** | 0.1566 ms |
 | **Full Grid**    | 0.0821 ms | **0.0008 ms** | 0.0697 ms |
-| **Complex NBT**  | 0.1036 ms | **0.0008 ms** | 0.1449 ms |
-| **Failed Match** | 0.0952 ms | **0.0011 ms** | 0.1482 ms |
+| **Complex NBT**  | 0.1036 ms | **0.0013 ms** | 0.1449 ms |
+| **Failed Match** | 0.0952 ms | **0.0037 ms** | 0.1482 ms |
 
 ---
 

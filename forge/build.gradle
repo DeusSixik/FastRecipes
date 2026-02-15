@@ -38,6 +38,8 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 
     modImplementation "curse.maven:shadow-config-1421861:7621242"
+
+    modImplementation "curse.maven:jei-238222:7391695"
 }
 
 processResources {

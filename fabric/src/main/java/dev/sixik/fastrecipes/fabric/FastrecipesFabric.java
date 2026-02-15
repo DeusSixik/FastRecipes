@@ -12,5 +12,7 @@ public final class FastrecipesFabric implements ModInitializer {
 
         // Run our common setup.
         FastRecipes.init();
+
+
     }
 }
