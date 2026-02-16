@@ -4,6 +4,15 @@
 
 You may have heard of [FastSuite](https://www.curseforge.com/minecraft/mc-mods/fastsuite), which optimizes recipe lookups using multithreading. While FastSuite tries to brute-force the problem by using more CPU cores, **FastRecipes** solves the root cause by fixing the algorithm itself.
 
+> [!NOTE]
+> **STATUS OF 1.21+ VERSIONS:**
+> FastRecipes will **not** be updated to Minecraft 1.21+.
+>
+> Mojang has significantly optimized the internal recipe lookup logic in version 1.21 (switching to more efficient maps and caching). Our benchmarks show that Vanilla 1.21 is already extremely fast.
+>
+> While FastRecipes could theoretically save another **0.5ms - 1ms**, this gain is practically imperceptible during gameplay and does not justify the complexity of an optimization mod. **FastRecipes has fulfilled its purpose for 1.20.1, but for 1.21+, Vanilla is finally good enough.**
+
+
 ### The Difference: FastSuite vs FastRecipes
 
 | Feature       | FastSuite                               | FastRecipes                  |
